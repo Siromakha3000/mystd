@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <ostream>
 #include <stdexcept>
 
 template <typename T>
@@ -6,7 +7,7 @@ struct Node
 {
     T value;
     Node* next;
-    Node() : value{ }, next{ nullptr } { }
+    Node() : value{ }, next{ nullptr } {}
     explicit Node(T value)
     {
         this->value = value;
@@ -79,8 +80,7 @@ public:
                 return;
             }
             current = current->next;
-        }
-        while (true);
+        } while (true);
     }
     void pop_back()
     {
@@ -105,8 +105,7 @@ public:
                 return;
             }
             current = current->next;
-        }
-        while (true);
+        } while (true);
     }
     void push_front(T newData)
     {
@@ -132,6 +131,22 @@ public:
         }
         size--;
     }
+    void remove(const size_t index)
+    {
+        if (index >= size)
+            throw std::out_of_range("LinkedList::get");
+        Node<T>* current = head;
+        for (size_t i = 1; i < index; i++)
+            current = current->next;
+        Node<T>* next = current->next;
+        if (next != nullptr)
+        {
+            Node<T>* next_next = next->next;
+            current->next = next_next;
+            delete next;
+        }
+        size--;
+    }
     void clear()
     {
         Node<T>* current = head;
@@ -148,4 +163,16 @@ public:
     {
         return size;
     }
+};
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, LinkedList<T>& obj)
+{
+    os << "[";
+    for (size_t i = 0; i < obj.count(); i++)
+    {
+        os << obj[i] << (i != obj.count() - 1 ? ", " : "");
+    }
+    os << "]";
+    return os;
 };

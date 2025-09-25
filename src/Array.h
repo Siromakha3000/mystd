@@ -118,11 +118,10 @@ template <typename T>
 std::ostream& operator<<(std::ostream& os, Array<T>& obj)
 {
     os << "[";
-    for (size_t i = 0; i < obj.size() - 2; i++)
+    for (size_t i = 0; i < obj.count(); i++)
     {
-        os << obj[i] << ", ";
+        os << obj[i] << (i != obj.count() - 1 ? ", " : "");
     }
-    os << obj[obj.size() - 1] << "]";
+    os << "]";
     return os;
 };
-

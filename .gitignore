@@ -1,3 +1,5 @@
 ﻿cmake-build-debug/
 /*.exe
 /.idea/
+/.vs/
+/out/
